@@ -1,0 +1,79 @@
+<hr>
+<%#= pdf_image_tag("https://www.torneseumprogramador.com.br/images/icon.png", :style=>"margin:0px;padding:0px", :width=>"380", :height=>"133") %>
+<h1 style="font-family: arial;font-size: 40px;display: inline-block;position: absolute;text-align: right;">
+  Relatório de funcionários<br>
+</h1>
+<hr>
+
+<div style="font-family: arial;font-size: 20px">
+  <div class="table-responsive">
+    <table>
+      <thead>
+        <tr>
+          <th>Total</th>
+          <th>Funcionario</th>
+          <th>Número CNH</th>
+          <th>Nascimento </th>
+          <th>CPF</th>
+          <th>RG</th>
+          <th>Telefone</th>
+          <th>Admissão</th>
+          <th>Validade CNH</th>
+          <th>Validade ASO</th>
+          <th>Setor</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% i = 0 %>
+        <%= content_tag_for(:tr, @funcionarios) do |funcionario| %>
+          <td><%= i = i + 1 %></td>
+          <td><%= funcionario.nome %></td>
+          <td><%= funcionario.nascimento.strftime("%d/%m/%Y") rescue "" %></td>
+          <td><%= funcionario.cpf %></td>
+          <td><%= funcionario.rg %></td>
+          <td><%= funcionario.telefone %></td>
+          <td><%= funcionario.admissao.strftime("%d/%m/%Y") rescue ""  %></td>
+          <td><%= funcionario.vencimento_cnh.strftime("%d/%m/%Y") rescue "" %></td>
+          <td><%= funcionario.vencimento_do_aso.strftime("%d/%m/%Y") rescue "" %></td>
+          <td><%= funcionario.setor %></td>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<style type="text/css">
+  table {
+    border-collapse: collapse;
+    margin-bottom: 1em;
+    width: 100%;
+  }
+
+  table tr {
+      page-break-inside: avoid;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f2f2f2
+  }
+
+  table thead tr th {
+      background-color: #fff;
+      color: #fff;
+      border: 1px solid #DDDDDD;
+      min-width: 0.6em;
+      padding: 5px;
+      text-align: center;
+      vertical-align: top;
+      font-weight: bold;
+      font-size: 15px;
+  }
+
+  table tbody tr td {
+      border: 1px solid #DDDDDD;
+      min-width: 0.6em;
+      padding: 5px;
+      vertical-align: top;
+      font-size: 14px;
+      text-align: center;
+  }
+</style>

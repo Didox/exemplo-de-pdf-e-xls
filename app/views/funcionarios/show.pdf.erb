@@ -1,0 +1,49 @@
+<div style="font-family: arial;font-size: 30px">
+  <hr>
+  <%#= pdf_image_tag("https://www.torneseumprogramador.com.br/images/icon.png", :style=>"margin:0px;padding:0px", :width=>"380", :height=>"133") %>
+  <h1 style="font-family: arial;font-size: 40px;display: inline-block;position: absolute;text-align: right;">
+    Relatório de funcionários<br>
+  </h1>
+  <hr>
+
+  <h1 class="nome-funcionario"><%= @funcionario.nome %></h1>
+
+  <dl class="dl-horizontal">  
+    <h2>Telefone: <span><%= @funcionario.telefone %></span></h2>
+    <h2>Email: <span><%= @funcionario.email %></span></h2>
+    <h2>Nascimento: <span><%= @funcionario.nascimento.strftime("%d/%m/%Y") rescue "" %></span></h2>
+    <h2>Admissão: <span><%= @funcionario.admissao.strftime("%d/%m/%Y") rescue "" %></span></h2>
+    <h2>Rg: <span><%= @funcionario.rg %></span></h2>
+    <h2>Cpf: <span><%= @funcionario.cpf %></span></h2>
+    <h2>Endereço: <span><%= @funcionario.endereco %></span></h2>
+    <h2>Função: <span><%= @funcionario.funcao %></span></h2>
+    <h2>Data do ASO: <span><%= @funcionario.data_do_aso.strftime("%d/%m/%Y") rescue "" %></span></h2>
+    <h2>Vencimento do ASO: <span><%= @funcionario.vencimento_do_aso.strftime("%d/%m/%Y") rescue "" %></span></h2>
+    <h2>Vencimento da Integração: <span><%= @funcionario.vencimento_da_integracao.strftime("%d/%m/%Y") rescue "" %></span></h2>
+    <h2>Vencimento CNH: <span><%= @funcionario.vencimento_cnh.strftime("%d/%m/%Y") rescue "" %></span></h2>
+  </dl>
+
+  <br>
+  <style type="text/css">
+    dl{
+      font-size: 10px;
+    }
+    span{
+      font-weight:100
+    }
+    .nome-funcionario{
+      font-size: 23pt;
+    }
+    .gridItensPedido{
+      font-size: 10px;width: 100%
+    }
+    .gridItensPedido th{
+      border: 1px solid #000;
+      font-weight: bold;
+    }
+    .gridItensPedido td{
+      border: 1px solid #696969;
+      text-align: center;
+    }
+  </style>
+</div>

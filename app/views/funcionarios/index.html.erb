@@ -1,0 +1,80 @@
+<div class="page-header">
+    <%= link_to new_funcionario_path, class: 'btn btn-primary' do %>
+      <span class="glyphicon glyphicon-plus"></span>
+      Novo Funcionario
+    <% end %>
+  <h1>Listando funcionarios</h1>
+</div>
+
+<form method="get" class="busca">
+  <div class="row">
+    <div class="col-sm-12">
+      <label>Nome:</label>
+      <input type="text" class="form-control" name="nome" value="<%= params[:nome] %>" />
+    </div>
+    <div class="col-sm-12" style="margin-top: 10px">
+      <input type="submit" value="Buscar" class="btn btn-primary" onclick="var values = [];$('.selecionado:checked').each(function(){ values.push(this.value) });$('#selecionado_input').val(values.join(','));$('#gerar_pdf').val('');$('form.busca').removeAttr('target');" >
+      <input type="hidden" name="gerar_pdf" id="gerar_pdf">
+      <input type="hidden" name="selecionado" id="selecionado_input">
+      <input type="submit" value="Gerar PDF" onclick="var values = [];$('.selecionado:checked').each(function(){ values.push(this.value) });$('#selecionado_input').val(values.join(',')); $('#gerar_pdf').val('ok');$('form.busca').attr({target:'_blank'});" class="btn btn-primary">
+      <input type="hidden" name="gerar_xlsx" id="gerar_xlsx">
+      <input type="submit" value="Gerar XLSX" onclick="xlsx()" class="btn btn-primary">        
+
+   </div>
+  </div>
+</form>
+
+<hr>
+
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Nome</th>
+        <th>Número CNH</th>
+        <th>Telefone</th>
+        <th>Data de nascimento</th>
+        <th>Vencimento do ASO</th>
+        <th>Vencimento da integração</th>
+        <th>Vencimento da CNH</th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% i = 0 %>
+      <%= content_tag_for(:tr, @funcionarios) do |funcionario| %>
+        <td>
+          <input type="checkbox" class="selecionado" <% if @selecionado.include?(funcionario.id.to_s) %> checked="checked" <% end %> value="<%= funcionario.id %>">
+        </td>
+        <td><%= funcionario.nome %></td>
+        <td><%= funcionario.telefone %></td>
+        <td><%= funcionario.nascimento.strftime("%d/%m/%Y") rescue "" %></td>
+        <td><%= funcionario.vencimento_do_aso.strftime("%d/%m/%Y") rescue "" %></td>
+        <td><%= funcionario.vencimento_da_integracao.strftime("%d/%m/%Y") rescue "" %></td>
+        <td><%= funcionario.vencimento_cnh.strftime("%d/%m/%Y") rescue "" %></td>
+        <td>
+          <form method="get" class="busca">
+            <div class="row">
+              <div class="col-sm-12">
+                <input type="hidden" name="gerar_pdf_individual" id="gerar_pdf_individual<%= i %>">
+                <input type="submit" value="Gerar PDF" onclick="$('#gerar_pdf_individual<%= i %>').val('<%=funcionario.id%>');$('form.busca').attr({target:'_blank'});" class="btn btn-primary">
+              </div>
+            </div>
+          </form>       
+        </td>
+        <td><%= link_to 'Mostrar', funcionario %></td>
+        <td>
+          <%= link_to "Copiar", "#copiar_individual#{funcionario.id}", rel: "modal:open" %>
+        </td>
+        <td><%= link_to 'Editar', edit_funcionario_path(funcionario) %></td>
+        <td><%= link_to 'Apagar', funcionario, method: :delete, data: { confirm: 'Confirma?' } %></td>
+        <% i += 1 %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
